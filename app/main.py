@@ -1,5 +1,5 @@
 from youtube_transcript_api import YouTubeTranscriptApi
-import requests
+import re
 
 # Get the video id from the url
 url = 'https://www.youtube.com/watch?v=btJpw6uaZ4g&list=WL&index=12'
@@ -9,78 +9,96 @@ video_id = video_id.split('&')[0]
 print(url)
 print(video_id)
 
-
 # Split a string into multiple parts using a separator
-def split_strings(input, separator):
-    result = []
+def split_strings(input, separators):
+    combined_array = []
 
-    if separator in input:
-        parts = input.split(separator)
-        if len(parts) == 3:
-            parts[0] = (parts[0] + separator).strip()
-            parts[1] = (parts[1] + separator).strip()
-            result = parts
+    # Create a regular expression pattern to capture separators
+    pattern = f'({'|'.join(map(re.escape, separators))})'
 
-    return result
+    # Split the input string using the pattern and keep the separators
+    result = re.split(pattern, input)
 
+    # Recombine adjacent strings
+    i = 0
+    while i < len(result) - 1:
+        combined_element = result[i] + result[i + 1]
+        combined_array.append(combined_element)
+        i += 2
+
+    return combined_array
 
 # Expand the dictionary by duplicating rows that have duplicated text
 def build_dictionary_expanding_duplicates(dictionary):
     result = []
 
     for item in dictionary:
-        periods = split_strings(item['text'], '.')
-        questions = split_strings(item['text'], '?')
-        exclamation = split_strings(item['text'], '!')
-        if len(periods) == 3:
-            result.append({'text': periods[0], 'start': item['start']})
-            result.append({'text': periods[1], 'start': item['start']})
-        elif len(questions) == 3:
-            result.append({'text': questions[0], 'start': item['start']})
-            result.append({'text': questions[1], 'start': item['start']})
-        elif len(exclamation) == 3:
-            result.append({'text': exclamation[0], 'start': item['start']})
-            result.append({'text': exclamation[1], 'start': item['start']})
-        else:
+        strings = split_strings(item['text'], ['.', '?', '!'])
+        if len(strings) == 0:
             result.append({'text': item['text'], 'start': item['start']})
+        else:
+            for string in strings:
+                result.append({'text': string, 'start': item['start']})
 
     return result
 
 
+# build dictionary without duplicates
 def build_dictionary_without_duplicates(dictionary):
     result = []
 
-    for item in dictionary:
-        if item not in result:
-            result.append(item)
+    for old_item in dictionary:
+        if not any(new_item['text'] == old_item['text'] for new_item in result):
+            result.append(old_item)
 
     return result
 
+
+def seconds_to_time_string(time_string):
+
+    # Calculate hours, minutes, and remaining seconds
+    hours = int(time_string // 3600)
+    minutes = int((time_string % 3600) // 60)
+    seconds = int(time_string % 60)
+    
+    # Format the time string
+    if hours == 0:
+        result = f"{minutes:02}:{seconds:02}"
+    else:
+        result = f"{hours:2}:{minutes:02}:{seconds:02}"
+
+    return result
+
+
+def build_dictionary_with_time_string(dictionary):
+    result = []
+
+    for item in dictionary:
+        new_time = seconds_to_time_string(item['start'])
+        result.append({'text': item['text'], 'start': new_time})
+
+    return result
 
 # Fetch the transcript
 dictionary_step_one = YouTubeTranscriptApi().fetch(
     video_id, languages=['de'])
-# print(dictionary_step_one)
 
 # Convert it to raw data
 dictionary_step_two = dictionary_step_one.to_raw_data()
 print(len(dictionary_step_two))
-# print(dictionary_step_two)
 
 # Build a dictionary expanding duplicates and striping duration
-dictionary_step_three = build_dictionary_expanding_duplicates(
-    dictionary_step_two)
+dictionary_step_three = build_dictionary_expanding_duplicates(dictionary_step_two)
 print(len(dictionary_step_three))
-print(dictionary_step_three)
 
+# build dictionary without duplicates
+dictionary_step_four = build_dictionary_without_duplicates(dictionary_step_three)
+print(len(dictionary_step_four))
 
-# Get the transcript step 2 - duplicate rows that have duplicated text and build a new dictionary
-
-# Get the transcript step 3 - build the final dictionary without not duplicates
-
-# Get the transcript step 4 - convert a float to a time string
-
-# Get the transcript step 5 - print the final dictionary
-
+# build dictionary with time as a string
+dictionary_step_five = build_dictionary_with_time_string(dictionary_step_four)
+print(len(dictionary_step_five))
+print(dictionary_step_five)
 
 # {'text': 'Wenn du dich müde fühlst, solltest du dich ausruhen.', 'start': 1655.353, 'duration': 7.141}
+
