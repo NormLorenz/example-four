@@ -54,6 +54,7 @@ def build_dictionary_without_duplicates(dictionary):
     return result
 
 
+# Convert a decimal to a string
 def seconds_to_time_string(time_string):
 
     # Calculate hours, minutes, and remaining seconds
@@ -68,8 +69,9 @@ def seconds_to_time_string(time_string):
         result = f"{hours:2}:{minutes:02}:{seconds:02}"
 
     return result
+    
 
-
+# Build a dictionary with the time strings
 def build_dictionary_with_time_string(dictionary):
     result = []
 
