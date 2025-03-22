@@ -92,7 +92,6 @@ dictionary_step_one = YouTubeTranscriptApi().fetch(video_id, languages=['de'])
 
 # Convert it to raw data
 dictionary_step_two = dictionary_step_one.to_raw_data()
-print(dictionary_step_two)
 
 # Build a dictionary expanding duplicates and striping duration
 dictionary_step_three = build_dictionary_expanding_duplicates(

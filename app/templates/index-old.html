@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Table Example</title>
+</head>
+
+<body>
+    <h1 class="text-center">Create a Transcript from the Youtube URL</h1>
+    <table style="border-width: 1px; border-style: solid; font-family: Roboto; font-size: 11.0pt;">
+        <tbody>
+            {% for row in data %}
+            <tr>
+                <td style="border-width: 1px; border-style: solid;">{{ row.start }}</td>
+                <td style="border-width: 1px; border-style: solid;">{{ row.text}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+
+</html>
