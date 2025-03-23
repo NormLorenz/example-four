@@ -31,5 +31,3 @@ This application is a web-based utility built with Flask that processes YouTube 
 
 ## Remaining Tasks
 - The table section should hide when there is no transcript
-- The application doesn't run correctly from the root and can't find utilities
-- Rename row to item

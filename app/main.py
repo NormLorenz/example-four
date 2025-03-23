@@ -1,8 +1,9 @@
 from youtube_transcript_api import YouTubeTranscriptApi
 from flask import Flask, request, render_template
-import utilities
+from app import utilities
 
 app = Flask(__name__)
+
 
 # test url = 'https://www.youtube.com/watch?v=btJpw6uaZ4g&list=WL&index=12'
 
