@@ -16,20 +16,20 @@
             <h1>Transcript Generator</h1>
             <h2>Create a Transcript Table for OneNote</h2>
         </header>
-        <form method="post">
+        <form id="question-form" method="POST" action="/ask" class="mt-4">
             <div class="form-group">
-                <label for="num1">Enter the YouTube URL</label>
+                <label for="url">Enter the YouTube URL</label>
                 <input type="string" class="form-control" id="url" name="url" required>
             </div>
             <button type="submit" class="btn btn-primary">Process</button>
         </form>
 
-        {% if result is not none %}
+        {% if transcript is not none %}
         <h2 class="mt-5">Result - please copy and paste</h2>
 
         <table style="border-width: 1px; border-style: solid; font-family: Roboto; font-size: 11.0pt;">
             <tbody>
-                {% for row in data %}
+                {% for row in transcript %}
                 <tr>
                     <td style="border-width: 1px; border-style: solid;">{{ row.start }}</td>
                     <td style="border-width: 1px; border-style: solid;">{{ row.text}}</td>

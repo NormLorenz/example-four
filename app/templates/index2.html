@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Transcript Utility</title>
+    <style>
+        body {
+            font-family: Calibri, sans-serif;
+            font-size: 11pt;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            background-color: #000000d8;
+            color: #ffffff;
+        }
+
+        .container {
+            width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 20px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            border-radius: 10px;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .form-section {
+            margin-top: 60px;
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        .table-section {
+            margin-top: 40px;
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        table {
+            width: 100%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            font-size: 11pt;
+            color: black;
+            background-color: #ffffff;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #007bff;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        .copy-button {
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .copy-button:hover {
+            background-color: #36699e;
+        }
+
+        #submitButton {
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+        }
+
+        #submitButton:hover {
+            background-color: #025ec0;
+        }
+
+        #url {
+            width: 400px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">YouTube Transcript Utility</div>
+            <nav>
+                <a href="#">Home</a>
+                <a href="#">About</a>
+                <a href="#">Contact</a>
+            </nav>
+        </header>
+        <main>
+            <section class="form-section">
+
+                <p>This utility will process the transcript from a YouTube video and create a table <br> that can be
+                    copied and pasted into a OneNote document.</p>
+
+                <form id="question-form" method="POST" action="/fetch">
+                    <input type="text" id="url" name="url" placeholder="Enter a YouTube URL" required>
+                    <button type="submit" id="submitButton">Fetch</button>
+                </form>
+
+            </section>
+            <section class="table-section">
+
+                <button class="copy-button" id="copyButton">Copy Table to Clipboard</button>
+                <table>
+                    <!-- <thead>
+                        <tr>
+                            <th>Column 1</th>
+                            <th>Column 2</th>
+                        </tr>
+                    </thead> -->
+                    <tbody id="tableBody">
+                        <!-- <tr>
+                            <td>Item 1</td>
+                            <td>Value 1</td>
+                        </tr>
+                        <tr>
+                            <td>Item 2</td>
+                            <td>Value 2</td>
+                        </tr> -->
+                        {% for row in transcript %}
+                        <tr>
+                            <td>{{ row.start }}</td>
+                            <td>{{ row.text}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            </section>
+        </main>
+    </div>
+    <script>
+        document.getElementById('copyButton').addEventListener('click', function () {
+            const table = document.querySelector('table');
+            const range = document.createRange();
+            range.selectNode(table);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            try {
+                document.execCommand('copy');
+                alert('Table copied to clipboard!');
+            } catch (err) {
+                alert('Failed to copy table.');
+            }
+            window.getSelection().removeAllRanges();
+        });
+    </script>
+</body>
+
+</html>

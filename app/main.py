@@ -1,22 +1,31 @@
 from youtube_transcript_api import YouTubeTranscriptApi
 # import re
-from flask import Flask, render_template
+from flask import Flask, request, render_template
 import utilities
 
 app = Flask(__name__)
 
 # Get the video id from the url
-url = 'https://www.youtube.com/watch?v=btJpw6uaZ4g&list=WL&index=12'
+# url = 'https://www.youtube.com/watch?v=btJpw6uaZ4g&list=WL&index=12'
 
 
 @app.route('/')
 def index():
-    data = utilities.get_transcript(url)
-    return render_template('index.html', data=data)
+    return render_template('index2.html')
+    # data = utilities.get_transcript(url)
+    # return render_template('index.html', data=data)
 
+@app.route('/fetch', methods=['POST'])
+def ask():
+    url = request.form['url']
+    transcript = utilities.get_transcript(url)    
+    return render_template('index2.html', transcript=transcript)
 
-# if __name__ == '__main__':
-app.run(debug=False)
+if __name__ == "__main__":
+    app.run(debug=True)
+
+# # if __name__ == '__main__':
+# app.run(debug=False)
 
 
 # video_id = url.split('v=')[1]
