@@ -4,7 +4,7 @@ import utilities
 
 app = Flask(__name__)
 
-# url = 'https://www.youtube.com/watch?v=btJpw6uaZ4g&list=WL&index=12'
+# test url = 'https://www.youtube.com/watch?v=btJpw6uaZ4g&list=WL&index=12'
 
 @app.route('/')
 def index():
