@@ -1,30 +1,36 @@
-# example-four
+# YouTube Transcription Utility
 
-https://pypi.org/project/youtube-transcript-api/#cli
+This application is a web-based utility built with Flask that processes YouTube video transcripts and generates a table that can be copied and pasted into a OneNote document.
 
-https://pypi.org/search/?q=openai
+## Features
 
-https://www.youtube.com/watch?v=ha-O5YYVzNo
+- Accepts a YouTube URL as input.
+- Fetches the transcript of the video using the `youtube-transcript-api`.
+- Displays the transcript in a table format with two columns: **Start** and **Text**.
+- Provides a "Copy Table to Clipboard" button for easy copying of the table into OneNote or other applications.
 
-3:41
+## How It Works
 
-Write Summary
+1. Enter a YouTube URL in the input field.
+2. Click the **Fetch** button to retrieve the transcript.
+3. If a transcript is available, it will be displayed in a table.
+4. Use the **Copy Table to Clipboard** button to copy the table for pasting into OneNote.
 
-Write Tests
+## Technologies Used
 
-It sounds like you're encountering an issue where the HTML content is pasted as raw text or code rather than rendering correctly in OneNote. This might happen due to how OneNote interprets pasted content.
+- **Flask**: Backend framework for handling routes and rendering templates.
+- **HTML/CSS**: For the frontend design and layout.
+- **JavaScript**: For clipboard functionality.
+- **youtube-transcript-api**: To fetch YouTube video transcripts.
 
-Here are a few tips to address this:
+## How to Run
 
-Use the Paste Options: After pasting the HTML into OneNote, a small clipboard icon often appears near the pasted content. Click on it to select a different paste option, like "Keep Source Formatting" or "Merge Formatting."
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/your-repo.git
 
-Use the Insert Functionality:
-
-Save the HTML file on your computer.
-
-Go to OneNote, click on the Insert tab, and choose File Printout or File Attachment. This will allow you to include the HTML as a readable file or as an image.
-
-Third-Party Converters: You could convert the HTML into a PDF or an image before importing it to OneNote. Browsers often have a "Save as PDF" option when printing a webpage. Once converted, you can insert it into OneNote as an attachment or a visual printout.
-
-If you're trying to achieve something specific with your HTML page in OneNote, feel free to share more details, and I’ll do my best to help!
+## Remaining Tasks
+- The table section should hide when there is no transcript
+- The application doesn't run correctly from the root and can't find utilities
+- Rename row to item
 
