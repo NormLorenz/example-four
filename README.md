@@ -32,3 +32,4 @@ This application is a web-based utility built with Flask that processes YouTube 
 ## Remaining Tasks
 - The table section should hide when there is no transcript
 - Need a favicon
+-
