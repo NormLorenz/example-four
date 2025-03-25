@@ -16,5 +16,5 @@ def ask():
     transcript = utilities.get_transcript(url)    
     return render_template('index.html', transcript=transcript)
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(debug=True)

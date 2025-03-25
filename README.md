@@ -36,3 +36,21 @@ This application is a web-based utility built with Flask that processes YouTube 
 - Also need some tests for the utilities.py file
 - Do I need import YouTubeTranscriptApi line 1 in the main.py file
 - Also ask again about if __name__ == "__main__": app.run(debug=True)
+
+## Launch
+Run the following from the root directory of the project:
+```ps
+python run.py
+```
+
+## Tests
+Run the following from the root directory of the project. This will discover and run all the test files in the tests directory:
+```ps
+python -m unittest discover -s tests 
+```
+
+## How to understand startup
+![alt text](screenshot.jpg)
+
+## Python Scripts, Modules and Libraries
+TBD
