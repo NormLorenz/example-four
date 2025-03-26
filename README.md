@@ -31,8 +31,6 @@ This application is a web-based utility built with Flask that processes YouTube 
 
 ## Remaining Tasks
 - The table section should hide when there is no transcript
-- Need a favicon
-- Also need an image for the HTML page
 - Also need some tests for the utilities.py file
 - Do I need import YouTubeTranscriptApi line 1 in the main.py file
 - Also ask again about if __name__ == "__main__": app.run(debug=True)

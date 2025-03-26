@@ -1,8 +1,11 @@
+from typing import Dict, List, Union
 from youtube_transcript_api import YouTubeTranscriptApi
 import re
 
 # High level entry point for the YouTube Transcript API
-def get_transcript(url):
+
+
+def get_transcript(url: str) -> List[Dict[str, str]]:
 
     # Get the video id from the url
     video_id = url.split('v=')[1]
@@ -27,19 +30,19 @@ def get_transcript(url):
 
 
 # Split a string into multiple parts using a separator
-def split_strings(input, separators):
-    combined_array = []
+def split_strings(input: str, separators: List[str]) -> List[str]:
+    combined_array: List[str] = []
 
     # Create a regular expression pattern to capture separators
-    pattern = f"({'|'.join(map(re.escape, separators))})"
+    pattern: str = f"({'|'.join(map(re.escape, separators))})"
 
     # Split the input string using the pattern and keep the separators
-    result = re.split(pattern, input)
+    result: List[str] = re.split(pattern, input)
 
     # Recombine adjacent strings
-    i = 0
+    i: int = 0
     while i < len(result) - 1:
-        combined_element = result[i] + result[i + 1]
+        combined_element: str = result[i] + result[i + 1]
         combined_array.append(combined_element)
         i += 2
 
@@ -47,11 +50,11 @@ def split_strings(input, separators):
 
 
 # Expand the dictionary by duplicating rows that have duplicated text
-def build_dictionary_expanding_duplicates(dictionary):
-    result = []
+def build_dictionary_expanding_duplicates(dictionary: List[Dict[str, str]]) -> List[Dict[str, str]]:
+    result: List[Dict[str, str]] = []
 
     for item in dictionary:
-        strings = split_strings(item['text'], ['.', '?', '!'])
+        strings: List[str] = split_strings(item['text'], ['.', '?', '!'])
         if len(strings) == 0:
             result.append({'text': item['text'], 'start': item['start']})
         else:
